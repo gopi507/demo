@@ -9,11 +9,7 @@ import java.util.List;
 @RestController
 public class Controller {
 
-    @GetMapping("/name")
-   public String name(){
-       return "gopi";
-   }
-   @GetMapping("/list")
+    @GetMapping("/list")
    public List<Integer> list(){
         return new ArrayList<>(List.of(1,2,3,4));
    }
