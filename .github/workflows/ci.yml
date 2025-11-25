@@ -1,7 +1,24 @@
 
+name: Spring Boot CI
+
+permissions:
+  contents: read
+  security-events: write
+
+on:
+  push:
+    branches:
+      - master
+      - branch-gopi
+  pull_request:
+    branches:
+      - master
+      - branch-gopi
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -14,6 +31,9 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
+
+      - name: Run Tests
+        run: mvn test
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
