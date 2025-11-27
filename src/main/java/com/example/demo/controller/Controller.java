@@ -12,4 +12,8 @@ public class Controller {
    public List<Integer> list(){
         return new ArrayList<>(List.of(1,2,3,4));
    }
+   @GetMapping("/name")
+   public String userName(){
+        return  "gopi";
+   }
 }
