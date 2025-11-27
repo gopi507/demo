@@ -1,5 +1,5 @@
 
-name: Spring Boot CI
+name: Spring Boot CI/CD
 
 permissions:
   contents: read
@@ -28,9 +28,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: 'maven'
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn -B clean package -DskipTests
 
       - name: Run Tests
         run: mvn test
@@ -40,3 +41,22 @@ jobs:
         with:
           name: spring-boot-app
           path: target/*.jar
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' # Deploy only on push, not on PRs
+
+    steps:
+      - name: Download JAR from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: spring-boot-app
+          path: app
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: springboot-demo  # Replace with your Azure Web App name
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: app/*.jar
