@@ -4,6 +4,7 @@ name: Spring Boot CI/CD
 permissions:
   contents: read
   security-events: write
+
 on:
   push:
     branches:
@@ -41,7 +42,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' # Deploy only on push, not on PRs
+    if: github.event_name == 'push'  # Deploy only on push, not on PRs
 
     steps:
       - name: Download JAR from build job
@@ -53,6 +54,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: springboot-demo  # Replace with your Azure Web App name
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE}}
+          app-name: springboot-demo
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: app/*.jar
