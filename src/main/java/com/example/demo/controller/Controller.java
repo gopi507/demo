@@ -16,7 +16,7 @@ public class Controller {
    public String userName(){
         return  "gopi";
    }
-   @GetMapping("/name")
+   @GetMapping("/names")
     public List <String> userNames(){
         return  new ArrayList<>(List.of("gopi","hlk"));
     }
