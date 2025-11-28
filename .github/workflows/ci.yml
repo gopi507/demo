@@ -4,7 +4,6 @@ name: Spring Boot CI/CD
 permissions:
   contents: read
   security-events: write
-
 on:
   push:
     branches:
